@@ -13,19 +13,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Git
-		    run: |
+        run: |
           git config user.name "Your GitHub User Name"
           git config user.email "Your GitHub User Email"
-		- name: Create changelog diff
-		  id: changelog_diff
-		  run: |
-			  sed -n "/^## \[${{ github.ref_name }}\]/,/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/{/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/!p;}" CHANGELOG.md > RELEASE_NOTE.md
-    - name: Release
-      uses: softprops/action-gh-release@v1
-      with:
-        body_path: RELEASE_NOTE.md
-        # note you'll typically need to create a personal access token
-        # with permissions to create releases in the other repo
-        token: ${{ secrets.TOKEN }}
-      env:
-        GITHUB_REPOSITORY: tchataigner/to_delete
+      - name: Create Changelog diff
+        id: changelog_diff
+        run: |
+          sed -n "/^## \[${{ github.ref_name }}\]/,/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/{/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/!p;}" CHANGELOG.md > RELEASE_NOTE.md
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: RELEASE_NOTE.md
+          # note you'll typically need to create a personal access token
+          # with permissions to create releases in the other repo
+          token: ${{ secrets.TOKEN }}
+        env:
+          GITHUB_REPOSITORY: tchataigner/to_delete
