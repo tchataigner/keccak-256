@@ -12,16 +12,26 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: Setup Node
+        id: setup_node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.10.0"
+          cache: 'npm'
       - name: Git Setup
         run: |
           git --version
           git config user.name "GitHub Release Bot"
           git config user.email "<>"
           git remote set-url origin https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git
+          git pull
+      - name: Install dependencies
+        id: install_dep
+        run: |
+          npm ci
       - name: Get tag
         id: get_tag
         run: |
-          git pull
           next_version=$(grep -m 1 -oP "^## \[\K[^\]]+" CHANGELOG.md)
           echo "version=$next_version" >> $GITHUB_ENV
       - name: Tag the commit
@@ -45,7 +55,11 @@ jobs:
           echo '${ CIRCUIT_NAME }'
           echo '${CIRCUIT_NAME}'
           ./circom 'circuits/${{ env.CIRCUIT_NAME }}.circom' --r1cs --wasm --prime 'vesta'
+        env:
+          GITHUB_REPOSITORY: tchataigner/to_delete
+          CIRCUIT_NAME: keccak-256
       - name: Release
+        id: release
         uses: softprops/action-gh-release@v1
         with:
           body_path: RELEASE_NOTE.md
@@ -56,6 +70,6 @@ jobs:
           # note you'll typically need to create a personal access token
           # with permissions to create releases in the other repo
           token: ${{ secrets.TOKEN }}
-        env:
-          GITHUB_REPOSITORY: tchataigner/to_delete
-          CIRCUIT_NAME: keccak-256
+    env:
+      GITHUB_REPOSITORY: tchataigner/to_delete
+      CIRCUIT_NAME: keccak-256
