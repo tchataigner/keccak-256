@@ -1,6 +1,6 @@
 ### CHANGELOG
 
-## [Unreleased]
+## [v0.0.7]
 
 Still trying
 
