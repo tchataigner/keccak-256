@@ -27,4 +27,4 @@ jobs:
         run: |
           next_version=${{ env.version }}
           git tag -a "$next_version" -m "Version $next_version"
-          git push --follow-tags
+           git push https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY} --follow-tags
