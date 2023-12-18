@@ -36,7 +36,7 @@ jobs:
         id: install_circom
         run: |
           # Download the binary & make it executable
-          curl -L -o circom 'https://github.com/iden3/circom/releases/download/2.1.6/circom-linux-amd64'
+          curl -L -o circom 'https://github.com/iden3/circom/releases/download/v2.1.7/circom-linux-amd64'
           chmod +x circom
       - name: Compile circuits
         id: compile_circuits
