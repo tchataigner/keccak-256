@@ -12,19 +12,20 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      - name: git
+        run: |
+          git --version
+          git config user.name "GitHub Release Bot"
+          git config user.email "<>"
+          git remote set-url origin https://${{ secrets.TOKEN }}@github.com/${{ GITHUB_REPOSITORY }}.git
       - name: Get tag
         id: get_tag
         run: |
           git pull
           next_version=$(grep -m 1 -oP "^## \[\K[^\]]+" CHANGELOG.md)
           echo "version=$next_version" >> $GITHUB_ENV
-      - name: git
-        run: |
-          git --version
-          git config user.name "GitHub Release Bot"
-          git config user.email "<>"
       - name: Tag the commit
         run: |
           next_version=${{ env.version }}
           git tag -a "$next_version" -m "Version $next_version"
-           git push https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY} --follow-tags
+          git push --follow-tags
