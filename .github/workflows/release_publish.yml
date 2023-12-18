@@ -1,21 +1,39 @@
-name: Publish the release on our repository
+name: Publish a tag and the release on our repository
 
 on:
-  push:
-    tags:
-      - '*'
+  pull_request:
+    types:
+      - closed
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.event.pull_request.title, 'Release:')
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Git Setup
+        run: |
+          git --version
+          git config user.name "GitHub Release Bot"
+          git config user.email "<>"
+          git remote set-url origin https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git
+      - name: Get tag
+        id: get_tag
+        run: |
+          git pull
+          next_version=$(grep -m 1 -oP "^## \[\K[^\]]+" CHANGELOG.md)
+          echo "version=$next_version" >> $GITHUB_ENV
+      - name: Tag the commit
+        run: |
+          next_version=${{ env.version }}
+          git tag -a "$next_version" -m "Version $next_version"
+          git push origin --tags
       - name: Create Changelog diff
         id: changelog_diff
         run: |
-          sed -n "/^## \[${{ github.ref_name }}\]/,/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/{/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/!p;}" CHANGELOG.md > RELEASE_NOTE.md
+          next_version=${{ env.version }}
+          sed -n "/^## \[$next_version\]/,/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/{/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/!p;}" CHANGELOG.md > RELEASE_NOTE.md
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
