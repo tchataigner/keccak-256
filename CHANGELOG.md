@@ -1,6 +1,6 @@
 ### CHANGELOG
 
-## [Unreleased]
+## [v0.0.24]
 qzd
 
 ## [v0.0.23]
