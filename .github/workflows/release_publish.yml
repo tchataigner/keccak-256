@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: git
+      - name: Git Setup
         run: |
           git --version
           git config user.name "GitHub Release Bot"
@@ -54,4 +54,5 @@ jobs:
           # with permissions to create releases in the other repo
           token: ${{ secrets.TOKEN }}
         env:
+          GITHUB_REPOSITORY: tchataigner/to_delete
           CIRCUIT_NAME: keccak-256
