@@ -1,6 +1,6 @@
 ### CHANGELOG
 
-## [Unreleased]
+## [v0.0.27]
 qzdaqzfgrqzefrgseqfrg
 
 ## [v0.0.26]
