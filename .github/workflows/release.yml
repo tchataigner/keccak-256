@@ -16,6 +16,10 @@ jobs:
         run: |
           git config user.name "Your GitHub User Name"
           git config user.email "Your GitHub User Email"
+      - name: Update Changelog
+        id: update_changelog
+        run: |
+          sed -i 's/Unreleased/${{ github.ref_name }}g'   CHANGELOG.md
       - name: Create Changelog diff
         id: changelog_diff
         run: |
