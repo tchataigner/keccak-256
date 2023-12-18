@@ -4,14 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version name'
+        description: 'Version'
         required: true
-        default: 'minor'
-        type: choice
-        options:
-          - major
-          - minor
-          - patch
+        type: string
 
 jobs:
   version:
