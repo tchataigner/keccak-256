@@ -15,7 +15,6 @@ jobs:
       - name: Get tag
         id: get_tag
         run: |
-          git branch --show-current
           git pull
           echo "grep -m 1 -oP '^## \[\K[^\]]+' CHANGELOG.md" >> $GITHUB_OUTPUT
       - name: Tag the commit

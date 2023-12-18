@@ -24,6 +24,6 @@ jobs:
         with:
           token: ${{ secrets.token }}
           branch: release/${{ github.event.inputs.version }}
-          title: "Release: ${{ github.event.inputs.version }} Pull Request"
+          title: "Release: ${{ github.event.inputs.version }}"
           body: "Pull request for our next release, ${{ github.event.inputs.version }}"
           base: main
