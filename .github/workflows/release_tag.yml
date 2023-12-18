@@ -18,6 +18,11 @@ jobs:
           git pull
           next_version=$(grep -m 1 -oP "^## \[\K[^\]]+" CHANGELOG.md)
           echo "version=$next_version" >> $GITHUB_ENV
+      - name: git
+        run: |
+          git --version
+          git config user.name "GitHub Release Bot"
+          git config user.email "<>"
       - name: Tag the commit
         run: |
           next_version=${{ env.version }}
