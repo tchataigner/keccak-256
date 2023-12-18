@@ -1,5 +1,11 @@
 ### CHANGELOG
 
+## [Unreleased]
+
+### Added
+
+- Added Circuits compilation at release time for static asset
+
 ## [v0.0.22]
 
 ### Fixed
