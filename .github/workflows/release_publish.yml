@@ -41,17 +41,17 @@ jobs:
       - name: Compile circuits
         id: compile_circuits
         run: |
-          echo '${{ CIRCUIT_NAME }}'
+          echo '${{ env.CIRCUIT_NAME }}'
           echo '${ CIRCUIT_NAME }'
           echo '${CIRCUIT_NAME}'
-          ./circom 'circuits/${{ CIRCUIT_NAME }}.circom' --r1cs --wasm --prime 'vesta'
+          ./circom 'circuits/${{ env.CIRCUIT_NAME }}.circom' --r1cs --wasm --prime 'vesta'
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           body_path: RELEASE_NOTE.md
           files: |
-            ./${{ CIRCUIT_NAME }}.r1cs
-            ./${{ CIRCUIT_NAME }}_js/${{ CIRCUIT_NAME }}.wasm
+            ./${{ env.CIRCUIT_NAME }}.r1cs
+            ./${{ env.CIRCUIT_NAME }}_js/${{ env.CIRCUIT_NAME }}.wasm
           tag_name: ${{ env.version }}
           # note you'll typically need to create a personal access token
           # with permissions to create releases in the other repo
