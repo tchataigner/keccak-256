@@ -26,13 +26,12 @@ jobs:
           echo "version=$next_version" >> $GITHUB_ENV
       - name: Tag the commit
         run: |
-          next_version=${{ env.version }}
-          git tag -a "$next_version" -m "Version $next_version"
+          git tag -a "${{ env.version }}" -m "Version ${{ env.version }}"
           git push origin --tags
       - name: Create Changelog diff
         id: changelog_diff
         run: |
-          sed -n "/^## \[${{ github.ref_name }}\]/,/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/{/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/!p;}" CHANGELOG.md > RELEASE_NOTE.md
+          sed -n "/^## \[${{ env.version }}\]/,/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/{/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/!p;}" CHANGELOG.md > RELEASE_NOTE.md
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
