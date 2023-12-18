@@ -1,0 +1,25 @@
+name: Publish the release on our repository
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.pull_request.title, 'Release:')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Get tag
+        id: get_tag
+        run: |
+          git branch --show-current
+          git pull
+          echo "grep -m 1 -oP '^## \[\K[^\]]+' CHANGELOG.md" >> $GITHUB_OUTPUT
+      - name: Tag the commit
+        run: |
+          next_version=${{ steps.get_tag.outputs.version }}
+          git tag -a "$next_version" -m "Version $next_version"
+          git push --follow-tags
