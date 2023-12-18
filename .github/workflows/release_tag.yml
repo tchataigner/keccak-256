@@ -1,4 +1,4 @@
-name: Publish the release on our repository
+name: Push a Release tag to our repository
 
 on:
   pull_request:
@@ -16,9 +16,10 @@ jobs:
         id: get_tag
         run: |
           git pull
-          echo 'grep -m 1 -oP "^## \[\K[^\]]+" CHANGELOG.md' >> $GITHUB_OUTPUT
+          next_version=$(grep -m 1 -oP "^## \[\K[^\]]+" CHANGELOG.md)
+          echo "version=$next_version" >> $GITHUB_ENV
       - name: Tag the commit
         run: |
-          next_version=${{ steps.get_tag.outputs.version }}
+          next_version=${{ env.version }}
           git tag -a "$next_version" -m "Version $next_version"
           git push --follow-tags

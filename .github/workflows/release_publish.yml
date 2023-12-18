@@ -1,4 +1,4 @@
-name: Push a Release tag to our repository
+name: Publish the release on our repository
 
 on:
   push:
