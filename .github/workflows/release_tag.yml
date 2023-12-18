@@ -16,7 +16,7 @@ jobs:
         id: get_tag
         run: |
           git pull
-          echo 'grep -m 1 -oP "^## \[\K[^\]]+' CHANGELOG.md" >> $GITHUB_OUTPUT
+          echo 'grep -m 1 -oP "^## \[\K[^\]]+" CHANGELOG.md' >> $GITHUB_OUTPUT
       - name: Tag the commit
         run: |
           next_version=${{ steps.get_tag.outputs.version }}
