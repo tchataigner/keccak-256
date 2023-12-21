@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## [Unreleased]
+
+- Changed static file names to repo name
+
 ## [v0.0.29]
 qzdaqzfgrqzefrgdqgfrtgdgszegrhtn
 
