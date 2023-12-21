@@ -1,6 +1,6 @@
 ### CHANGELOG
 
-## [Unreleased]
+## [v0.0.34]
 
 - Wit hsudo
 
