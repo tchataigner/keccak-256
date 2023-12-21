@@ -1,6 +1,6 @@
 ### CHANGELOG
 
-## [Unreleased]
+## [v0.0.31]
 
 - Changed nack circuit name
 
