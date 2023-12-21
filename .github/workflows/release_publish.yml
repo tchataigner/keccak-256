@@ -72,4 +72,4 @@ jobs:
           token: ${{ secrets.TOKEN }}
     env:
       GITHUB_REPOSITORY: tchataigner/to_delete
-      CIRCUIT_NAME: to_delete
+      CIRCUIT_NAME: keccak-256
