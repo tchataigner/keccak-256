@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## [Unreleased]
+
+- Moved Circom bin to usr/bin in workflow
+
 ## [v0.0.32]
 
 - Try out with test in workflow
