@@ -1,5 +1,9 @@
 ### CHANGELOG
 
+## [Unreleased]
+
+- Wit hsudo
+
 ## [v0.0.33]
 
 - Moved Circom bin to usr/bin in workflow
