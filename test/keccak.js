@@ -26,16 +26,10 @@ describe("Keccak 32bytes full hash test", function () {
 			210, 214, 116, 170, 85, 45, 21];
 
 		const inIn = utils.bytesToBits(input);
-		console.log("inIn", inIn);
 		const witness = await cir.calculateWitness({ "in": inIn }, true);
-		console.log("witness", witness);
-		console.log(witness.length);
 		const stateOut = witness.slice(1, 1+(32*8));
-		console.log("stateOut", stateOut);
-		console.log(stateOut.length);
-
 		const stateOutBytes = utils.bitsToBytes(stateOut);
-		console.log("stateOutBytes", stateOutBytes)
+
 		// console.log(stateOutBytes, expectedOut);
 		assert.deepEqual(stateOutBytes, expectedOut);
     });

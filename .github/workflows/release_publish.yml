@@ -24,11 +24,21 @@ jobs:
           git config user.name "GitHub Release Bot"
           git config user.email "<>"
           git remote set-url origin https://${{ secrets.TOKEN }}@github.com/${GITHUB_REPOSITORY}.git
+      - name: Install Circom Binary
+        id: install_circom
+        run: |
+          # Download the binary & make it executable
+          curl -L -o circom 'https://github.com/iden3/circom/releases/download/v2.1.7/circom-linux-amd64'
+          chmod +x circom
           git pull
       - name: Install dependencies
         id: install_dep
         run: |
           npm ci
+      - name: Run tests
+        id: run_tests
+        run: |
+          npm run test
       - name: Get tag
         id: get_tag
         run: |
@@ -42,12 +52,6 @@ jobs:
         id: changelog_diff
         run: |
           sed -n "/^## \[${{ env.version }}\]/,/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/{/^## \[$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1 --max-count=1))\]/!p;}" CHANGELOG.md > RELEASE_NOTE.md
-      - name: Install Circom Binary
-        id: install_circom
-        run: |
-          # Download the binary & make it executable
-          curl -L -o circom 'https://github.com/iden3/circom/releases/download/v2.1.7/circom-linux-amd64'
-          chmod +x circom
       - name: Compile circuits
         id: compile_circuits
         run: |
@@ -71,5 +75,5 @@ jobs:
           # with permissions to create releases in the other repo
           token: ${{ secrets.TOKEN }}
     env:
-      GITHUB_REPOSITORY: tchataigner/to_delete
+      GITHUB_REPOSITORY: tchataigner/keccak-256
       CIRCUIT_NAME: keccak-256

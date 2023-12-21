@@ -67,7 +67,6 @@ function u64ArrayToBits(u) {
 }
 function bitsToU64(b) {
     if (b.length != 64) {
-	console.log("b.length = ", b.length, " max=64");
 	return;
     }
     const by = bitsToBytes(b)

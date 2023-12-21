@@ -1,8 +1,12 @@
 ### CHANGELOG
 
+## [Unreleased]
+
+- Try out with test in workflow
+
 ## [v0.0.31]
 
-- Changed nack circuit name
+- Changed static file names to repo name
 
 ## [v0.0.30]
 
